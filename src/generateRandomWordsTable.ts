@@ -1,7 +1,6 @@
-import words from "./words.json";
+import chunk from "lodash.chunk";
 import random from "lodash.random";
 import shuffle from "lodash.shuffle";
-import chunk from "lodash.chunk";
 
 const NUM_OF_COLUMNS = 3;
 const NUM_OF_ELEMENTS = 48;
