@@ -1,16 +1,24 @@
 <script lang="ts">
   import { generateRandomWords } from "./generateRandomWordsTable";
 
-  export const wordTable = generateRandomWords();
+  export async function fetchWords() {
+    const words = await fetch("/words.json").then((r) => r.json());
+    return generateRandomWords(words.pt);
+  }
 </script>
 
-<main>
+<header>
   <h1>Treinamento Fono</h1>
-  <p>
+  <p class="description">
     Treino e percepção dos diferentes tempos de articulação de acordo com o
     comprimento da palavra.
   </p>
+</header>
 
+<main>
+  {#await fetchWords()}
+  <p class="loading">Carregando...</p>
+  {:then wordTable}
   <table>
     <tbody>
       {#each wordTable as row}
@@ -22,20 +30,30 @@
       {/each}
     </tbody>
   </table>
+  {/await}
 </main>
+
+<footer>
+  <p>
+    Para ver a lista completa de todas palavras disponíveis,
+    <a href="/words.json">click aqui</a>
+  </p>
+</footer>
 
 <style>
   main {
     padding: 1em;
     margin: 0 auto;
   }
-  p {
+  .description,
+  .loading {
     max-width: 500px;
     margin: 0 auto;
     text-align: center;
   }
 
-  table {
+  table,
+  .loading {
     margin-top: 3rem;
   }
 

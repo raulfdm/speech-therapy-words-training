@@ -10,9 +10,15 @@ const NUM_OF_ROWS = NUM_OF_ELEMENTS / NUM_OF_COLUMNS;
 type Sequence = "3<=" | "4>=";
 type Word = "string";
 type Words = Word[];
+type Dictionary = {
+  twoSyllable: Words;
+  threeSyllable: Words;
+  fourSyllable: Words;
+  fiveSyllable: Words;
+  polysyllable: Words;
+};
 
-export function generateRandomWords(language = "pt") {
-  const dictionary = words[language];
+export function generateRandomWords(dictionary: Dictionary) {
   const treeOrLessSyllables = [].concat(
     dictionary.twoSyllable,
     dictionary.threeSyllable
