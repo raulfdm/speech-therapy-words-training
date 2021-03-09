@@ -1,23 +1,13 @@
 import chunk from "lodash.chunk";
 import random from "lodash.random";
 import shuffle from "lodash.shuffle";
+import type { Dictionary, Sequence, Vocabulary } from "./types";
 
 const NUM_OF_COLUMNS = 3;
 const NUM_OF_ELEMENTS = 48;
 const NUM_OF_ROWS = NUM_OF_ELEMENTS / NUM_OF_COLUMNS;
 
-type Sequence = "3<=" | "4>=";
-type Word = "string";
-type Words = Word[];
-type Dictionary = {
-  twoSyllable: Words;
-  threeSyllable: Words;
-  fourSyllable: Words;
-  fiveSyllable: Words;
-  polysyllable: Words;
-};
-
-export function generateRandomWords(dictionary: Dictionary) {
+export function generateRandomWords(dictionary: Dictionary): Vocabulary {
   const treeOrLessSyllables = [].concat(
     dictionary.twoSyllable,
     dictionary.threeSyllable
@@ -49,7 +39,7 @@ export function generateRandomWords(dictionary: Dictionary) {
   return chunk(result, NUM_OF_COLUMNS);
 }
 
-function getRandomWord(list: Words, result: Words) {
+function getRandomWord(list: Vocabulary, result: Vocabulary) {
   const randomIndex = random(list.length - 1);
   let word = shuffle(list)[randomIndex];
 
@@ -57,5 +47,5 @@ function getRandomWord(list: Words, result: Words) {
     word = getRandomWord(list, result);
   }
 
-  return word;
+  return word.toLowerCase();
 }
